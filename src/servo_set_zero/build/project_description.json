@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "servo_set_zero",
-    "project_version":    "a901356",
+    "project_version":    "55ff4b3-dirty",
     "project_path":       "/home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_set_zero",
     "idf_path":           "/home/saish_k/esp/esp-idf",
     "build_dir":          "/home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_set_zero/build",

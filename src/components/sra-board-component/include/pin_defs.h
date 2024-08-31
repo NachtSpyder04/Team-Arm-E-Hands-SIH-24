@@ -104,7 +104,7 @@
 #define SERVO_B 5
 #define SERVO_C 19
 #define SERVO_D 18
-#define SERVO_E 20 //need to refer 
+#define SERVO_E 21 //need to refer 
 /////////////////////////////
 
 #endif
