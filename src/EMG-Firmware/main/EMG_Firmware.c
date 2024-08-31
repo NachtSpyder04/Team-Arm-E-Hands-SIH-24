@@ -136,10 +136,11 @@ void print_buffer()
         printf("%d, %d, %d, %d\n", circular_buffer1[i], circular_buffer2[i], circular_buffer3[i], circular_buffer4[i]);
     }
 }
-
 float EMGFilter(float input)
 {
     float output = input;
+
+    // Bandpass filter section
     {
         static float z1, z2; // filter section state
         float x = output - 0.05159732 * z1 - 0.36347401 * z2;
