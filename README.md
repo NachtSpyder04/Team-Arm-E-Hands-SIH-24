@@ -1,6 +1,6 @@
 # Team-Arm-E-Hands-SIH-24
 
-We read Electromyography (EMG) data using sensors, amplify it, filter it, perform ADC conversion, and process it. Using the analyzed data, we train an DL model that can understand what hand movement was performed to get those readings. Later those Readings are fed into a DL model to recognize and classify those motions. A ESP/Raspberry Pi will haeve the Deep learning model running on it, based on the predicted label the ESP/Rasberry Pi will control the prosthetic arm, giving us a affordable but effective Myoelectric Prosthetic Arm.
+We read Electromyography (EMG) data using sensors, amplify it, filter it, perform ADC conversion, and process it. Using the analyzed data, we train an DL model that can understand what hand movement was performed to get those readings. Later those Readings are fed into a DL model to recognize and classify those motions. A ESP/Raspberry Pi will haeve the Deep learning model running on it, based on the predicted label the ESP/Raspberry Pi will control the prosthetic arm, giving us a affordable but effective Myoelectric Prosthetic Arm.
 
 To run the project:
 0. Make sure the emg data collection sensors are connected.
