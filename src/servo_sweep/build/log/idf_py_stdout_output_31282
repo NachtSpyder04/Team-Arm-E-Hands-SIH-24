@@ -1,0 +1,45 @@
+-- IDF_TARGET is not set, guessed 'esp32' from sdkconfig '/home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_sweep/sdkconfig'
+-- Found Git: /usr/bin/git (found version "2.46.0")
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /home/saish_k/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/saish_k/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/saish_k/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building ESP-IDF components for target esp32
+-- Project sdkconfig file /home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_sweep/sdkconfig
+Loading defaults file /home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_sweep/sdkconfig.defaults...
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of time_t
+-- Check size of time_t - done
+-- Found Python3: /home/saish_k/.espressif/python_env/idf5.1_py3.12_env/bin/python (found version "3.12.4") found components: Interpreter
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
+-- App "servo_sweep" version: a901356
+-- Adding linker script /home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_sweep/build/esp-idf/esp_system/ld/memory.ld
+-- Adding linker script /home/saish_k/esp/esp-idf/components/esp_system/ld/esp32/sections.ld.in
+-- Adding linker script /home/saish_k/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.ld
+-- Adding linker script /home/saish_k/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.api.ld
+-- Adding linker script /home/saish_k/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
+-- Adding linker script /home/saish_k/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-data.ld
+-- Adding linker script /home/saish_k/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.syscalls.ld
+-- Adding linker script /home/saish_k/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld
+-- Adding linker script /home/saish_k/esp/esp-idf/components/soc/esp32/ld/esp32.peripherals.ld
+-- Components: app_trace app_update bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_coex esp_common esp_eth esp_event esp_gdbstub esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_lcd esp_local_ctrl esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_system esp_timer esp_wifi espcoredump esptool_py fatfs freertos hal heap http_parser idf_test ieee802154 json log lwip main mbedtls mqtt newlib nvs_flash openthread partition_table perfmon protobuf-c protocomm pthread sdmmc soc spi_flash spiffs sra-board-component tcp_transport ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant xtensa
+-- Component paths: /home/saish_k/esp/esp-idf/components/app_trace /home/saish_k/esp/esp-idf/components/app_update /home/saish_k/esp/esp-idf/components/bootloader /home/saish_k/esp/esp-idf/components/bootloader_support /home/saish_k/esp/esp-idf/components/bt /home/saish_k/esp/esp-idf/components/cmock /home/saish_k/esp/esp-idf/components/console /home/saish_k/esp/esp-idf/components/cxx /home/saish_k/esp/esp-idf/components/driver /home/saish_k/esp/esp-idf/components/efuse /home/saish_k/esp/esp-idf/components/esp-tls /home/saish_k/esp/esp-idf/components/esp_adc /home/saish_k/esp/esp-idf/components/esp_app_format /home/saish_k/esp/esp-idf/components/esp_coex /home/saish_k/esp/esp-idf/components/esp_common /home/saish_k/esp/esp-idf/components/esp_eth /home/saish_k/esp/esp-idf/components/esp_event /home/saish_k/esp/esp-idf/components/esp_gdbstub /home/saish_k/esp/esp-idf/components/esp_hid /home/saish_k/esp/esp-idf/components/esp_http_client /home/saish_k/esp/esp-idf/components/esp_http_server /home/saish_k/esp/esp-idf/components/esp_https_ota /home/saish_k/esp/esp-idf/components/esp_https_server /home/saish_k/esp/esp-idf/components/esp_hw_support /home/saish_k/esp/esp-idf/components/esp_lcd /home/saish_k/esp/esp-idf/components/esp_local_ctrl /home/saish_k/esp/esp-idf/components/esp_mm /home/saish_k/esp/esp-idf/components/esp_netif /home/saish_k/esp/esp-idf/components/esp_netif_stack /home/saish_k/esp/esp-idf/components/esp_partition /home/saish_k/esp/esp-idf/components/esp_phy /home/saish_k/esp/esp-idf/components/esp_pm /home/saish_k/esp/esp-idf/components/esp_psram /home/saish_k/esp/esp-idf/components/esp_ringbuf /home/saish_k/esp/esp-idf/components/esp_rom /home/saish_k/esp/esp-idf/components/esp_system /home/saish_k/esp/esp-idf/components/esp_timer /home/saish_k/esp/esp-idf/components/esp_wifi /home/saish_k/esp/esp-idf/components/espcoredump /home/saish_k/esp/esp-idf/components/esptool_py /home/saish_k/esp/esp-idf/components/fatfs /home/saish_k/esp/esp-idf/components/freertos /home/saish_k/esp/esp-idf/components/hal /home/saish_k/esp/esp-idf/components/heap /home/saish_k/esp/esp-idf/components/http_parser /home/saish_k/esp/esp-idf/components/idf_test /home/saish_k/esp/esp-idf/components/ieee802154 /home/saish_k/esp/esp-idf/components/json /home/saish_k/esp/esp-idf/components/log /home/saish_k/esp/esp-idf/components/lwip /home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_sweep/main /home/saish_k/esp/esp-idf/components/mbedtls /home/saish_k/esp/esp-idf/components/mqtt /home/saish_k/esp/esp-idf/components/newlib /home/saish_k/esp/esp-idf/components/nvs_flash /home/saish_k/esp/esp-idf/components/openthread /home/saish_k/esp/esp-idf/components/partition_table /home/saish_k/esp/esp-idf/components/perfmon /home/saish_k/esp/esp-idf/components/protobuf-c /home/saish_k/esp/esp-idf/components/protocomm /home/saish_k/esp/esp-idf/components/pthread /home/saish_k/esp/esp-idf/components/sdmmc /home/saish_k/esp/esp-idf/components/soc /home/saish_k/esp/esp-idf/components/spi_flash /home/saish_k/esp/esp-idf/components/spiffs /home/saish_k/Team-Arm-E-Hands-SIH-24/src/components/sra-board-component /home/saish_k/esp/esp-idf/components/tcp_transport /home/saish_k/esp/esp-idf/components/ulp /home/saish_k/esp/esp-idf/components/unity /home/saish_k/esp/esp-idf/components/usb /home/saish_k/esp/esp-idf/components/vfs /home/saish_k/esp/esp-idf/components/wear_levelling /home/saish_k/esp/esp-idf/components/wifi_provisioning /home/saish_k/esp/esp-idf/components/wpa_supplicant /home/saish_k/esp/esp-idf/components/xtensa
+-- Configuring done (2.3s)
+-- Generating done (0.3s)
+-- Build files have been written to: /home/saish_k/Team-Arm-E-Hands-SIH-24/src/servo_sweep/build
