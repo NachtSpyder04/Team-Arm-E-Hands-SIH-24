@@ -66,7 +66,7 @@ if __name__ == "__main__":
     model = load_model(model_path)
 
     # Load and preprocess new data
-    new_data_path = '../data_sih./test_data.txt'  # Replace with the path to your new data
+    new_data_path = '../data_sih/test_data.txt'  # Replace with the path to your new data
     new_data = load_and_preprocess_data(new_data_path)
 
     # Initialize LabelEncoder with the same labels used during training
