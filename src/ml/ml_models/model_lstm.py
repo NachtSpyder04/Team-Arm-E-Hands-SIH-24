@@ -57,9 +57,9 @@ def load_data(file_paths, file_labels, lines_per_example=300, delimiter=',', dty
     return data, labels
 
 file_paths = [
-    'data/claw_final1.txt',
-    'data/index_final1.txt',
-    'data/middle_finger_final1.txt'
+    'data_sih/claw_vyoma.txt',
+    'data_sih/Shaunak_index.txt',
+    'data_sih/skd_middle.txt'
 ]
 
 file_labels = [

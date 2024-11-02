@@ -58,19 +58,16 @@ def load_data(file_paths, file_labels, lines_per_example=300, delimiter=',', dty
 
     return data, labels
 
-# File paths and labels
 file_paths = [
-    'data/final_data/claw_final1.txt',
-    'data/final_data/index_final1.txt',
-    'data/final_data/middle_finger_final1.txt',
-    'data/final_data/thumb_final.txt'
+    '../data_sih/claw_vyoma.txt',
+    '../data_sih/skd_middle.txt',
+    '../data_sih/Shaunak_index.txt',
 ]
 
 file_labels = [
     'claw',
-    'index',
     'middle',
-    'thumb'
+    'index',
 ]
 
 data, labels = load_data(file_paths, file_labels)
@@ -117,7 +114,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # Train the model
-model.fit(X_train, y_train, epochs=100, batch_size=16, validation_split=0.3)
+model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2)
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(X_test, y_test)

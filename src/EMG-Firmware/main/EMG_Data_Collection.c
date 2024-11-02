@@ -5,8 +5,6 @@
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 
-#define SAMPLE_RATE 500
-
 #define INPUT_PIN1 ADC1_CHANNEL_6 // pin 34
 #define INPUT_PIN2 ADC1_CHANNEL_7 // pin 35
 #define INPUT_PIN3 ADC1_CHANNEL_4 // pin 32
@@ -24,12 +22,12 @@ static int data_index = 0, times = 0, single = 0;
 
 static esp_adc_cal_characteristics_t adc_chars;
 
-static int getEnvelope(int abs_emg);
 static float EMGFilter(float input);
 void emg(void);
 void print_buffer();
+float bandstop(float input);
 
-const TickType_t xDelay = 1000 / SAMPLE_RATE / portTICK_PERIOD_MS;
+const TickType_t xDelay = 2 / portTICK_PERIOD_MS;
 
 void app_main(void)
 {
@@ -166,6 +164,44 @@ float EMGFilter(float input)
         static float z1, z2; // filter section state
         float x = output - -1.00211112 * z1 - 0.74520226 * z2;
         output = 1.00000000 * x + -2.00000000 * z1 + 1.00000000 * z2;
+        z2 = z1;
+        z1 = x;
+    }
+    return output;
+}
+
+// Band-Stop Butterworth IIR digital filter, generated using filter_gen.py.
+// Sampling rate: 1000.0 Hz, frequency: [59.0, 61.0] Hz.
+// Filter is order 4, implemented as second-order sections (biquads).
+// Reference: https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.butter.html
+float bandstop(float input)
+{
+    float output = input;
+    {
+        static float z1, z2; // filter section state
+        float x = output - -1.84702159 * z1 - 0.98838740 * z2;
+        output = 0.98371517 * x + -1.82930658 * z1 + 0.98371517 * z2;
+        z2 = z1;
+        z1 = x;
+    }
+    {
+        static float z1, z2; // filter section state
+        float x = output - -1.85067147 * z1 - 0.98852682 * z2;
+        output = 1.00000000 * x + -1.85958968 * z1 + 1.00000000 * z2;
+        z2 = z1;
+        z1 = x;
+    }
+    {
+        static float z1, z2; // filter section state
+        float x = output - -1.85073796 * z1 - 0.99513252 * z2;
+        output = 1.00000000 * x + -1.85958968 * z1 + 1.00000000 * z2;
+        z2 = z1;
+        z1 = x;
+    }
+    {
+        static float z1, z2; // filter section state
+        float x = output - -1.85939565 * z1 - 0.99527287 * z2;
+        output = 1.00000000 * x + -1.85958968 * z1 + 1.00000000 * z2;
         z2 = z1;
         z1 = x;
     }

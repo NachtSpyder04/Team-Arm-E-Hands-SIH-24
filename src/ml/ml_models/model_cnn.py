@@ -58,15 +58,15 @@ def load_data(file_paths, file_labels, lines_per_example=300, delimiter=',', dty
     return data, labels
 
 file_paths = [
-    # 'data/claw_final1.txt',
-    'data/index_final1.txt',
-    'data/middle_finger_final1.txt'
+    '../data_sih/claw_vyoma.txt',
+    '../data_sih/skd_middle.txt',
+    '../data_sih/Shaunak_index.txt',
 ]
 
 file_labels = [
-    # 'claw',
+    'claw',
+    'middle',
     'index',
-    'middle'
 ]
 
 
@@ -132,7 +132,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # Train, evaluate, and save the model
-model.fit(X_train, y_train, epochs=100, batch_size=12, validation_split=0.2)
+model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2)
 
 test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f'Test accuracy: {test_acc}')
