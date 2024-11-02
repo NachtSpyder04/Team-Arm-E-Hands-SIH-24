@@ -1,130 +1,46 @@
-/*This code sets up a basic websocket on the esp. It gives a proof of concept on the creation of a websocket using esp32*/
 
-#include <stdio.h>
-#include "esp_wifi.h"
-#include "esp_system.h"
-#include "esp_event.h"
-#include "esp_log.h"
-#include "nvs_flash.h"
-
+#include <string.h>
+#include <fcntl.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/semphr.h"
-#include "freertos/event_groups.h"
-#include <esp_http_server.h>
+#include "driver/gpio.h"
+#include "esp_spiffs.h"
+#include "nvs_flash.h"
+#include "esp_netif.h"
+#include "esp_event.h"
+#include "esp_log.h"
+#include "mdns.h"
+#include "lwip/apps/netbiosns.h"
+#include "esp_http_server.h"
+#include "esp_system.h"
+#include "esp_vfs.h"
+#include "cJSON.h"
+#include "sdkconfig.h"
+#include "wifi_handler.h"
+#include "websocket_server.h"
 
-static const char *TAG = "Websocket Server: ";
+#define MDNS_INSTANCE "walle pid tuning web server"
+#define MDNS_HOST_NAME CONFIG_MDNS_HOST_NAME
+#define WEB_MOUNT_POINT "/www"
+#define FILE_PATH_MAX (ESP_VFS_PATH_MAX + 128)
+#define SCRATCH_BUFSIZE (10240)
+#define CHECK_FILE_EXTENSION(filename, ext) (strcasecmp(&filename[strlen(filename) - strlen(ext)], ext) == 0)
 
-static void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
+static const char *TAG = "tuning_websocket_server";
+
+static QueueHandle_t client_queue;
+const static int client_queue_size = 10;
+
+static void initialize_mdns(void)
 {
-    switch (event_id)
-    {
-    case WIFI_EVENT_STA_START:
-        printf("WiFi connecting ... \n");
-        break;
-    case WIFI_EVENT_STA_CONNECTED:
-        printf("WiFi connected ... \n");
-        break;
-    case WIFI_EVENT_STA_DISCONNECTED:
-        printf("WiFi lost connection ... \n");
-        break;
-    case IP_EVENT_STA_GOT_IP:
-        printf("WiFi got IP ... \n\n");
-        break;
-    default:
-        break;
-    }
-}
+    ESP_ERROR_CHECK(mdns_init());
+    ESP_ERROR_CHECK(mdns_hostname_set(MDNS_HOST_NAME));
+    ESP_LOGI(TAG, "mdns hostname set to: [%s]", MDNS_HOST_NAME);
+    ESP_ERROR_CHECK(mdns_instace_name_set(MDNS_INSTANCE));
 
-void wifi_connection()
-{
-    nvs_flash_init();
-    // 1 - Wi-Fi/LwIP Init Phase
-    esp_netif_init();                    // TCP/IP initiation 					s1.1
-    esp_event_loop_create_default();     // event loop 			                s1.2
-    esp_netif_create_default_wifi_sta(); // WiFi station 	                    s1.3
-    wifi_init_config_t wifi_initiation = WIFI_INIT_CONFIG_DEFAULT();
-    esp_wifi_init(&wifi_initiation); // 					                    s1.4
-    // 2 - Wi-Fi Configuration Phase
-    esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, wifi_event_handler, NULL);
-    esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, wifi_event_handler, NULL);
-    wifi_config_t wifi_configuration = {
-        .sta = {
-            .ssid = "Delta_Virus_2.4G",
-            .password = "66380115"}};
-    esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_configuration);
-    // 3 - Wi-Fi Start Phase
-    esp_wifi_start();
-    // 4- Wi-Fi Connect Phase
-    esp_wifi_connect();
-}
-
-// Asynchronous response data structure
-struct async_resp_arg
-{
-    httpd_handle_t hd; // Server instance
-    int fd;            // Session socket file descriptor
-};
-
-// The asynchronous response
-static void generate_async_resp(void *arg)
-{
-    // Data format to be sent from the server as a response to the client
-    char http_string[250];
-    char *data_string = "Hello from ESP32 websocket server ...";
-    sprintf(http_string, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\n\r\n", strlen(data_string));
-
-    // Initialize asynchronous response data structure
-    struct async_resp_arg *resp_arg = (struct async_resp_arg *)arg;
-    httpd_handle_t hd = resp_arg->hd;
-    int fd = resp_arg->fd;
-
-    // Send data to the client
-    ESP_LOGI(TAG, "Executing queued work fd : %d", fd);
-    httpd_socket_send(hd, fd, http_string, strlen(http_string), 0);
-    httpd_socket_send(hd, fd, data_string, strlen(data_string), 0);
-
-    free(arg);
-}
-
-// Initialize a queue for asynchronous communication
-static esp_err_t async_get_handler(httpd_req_t *req)
-{
-    struct async_resp_arg *resp_arg = malloc(sizeof(struct async_resp_arg));
-    resp_arg->hd = req->handle;
-    resp_arg->fd = httpd_req_to_sockfd(req);
-    ESP_LOGI(TAG, "Queuing work fd : %d", resp_arg->fd);
-    httpd_queue_work(req->handle, generate_async_resp, resp_arg);
-    return ESP_OK;
-}
-a
-    // Create URI (Uniform Resource Identifier)
-    // for the server which is added to default gateway
-    static const httpd_uri_t uri_handler = {
-        .uri = "/ws", // URL added to WiFi's default gateway
-        .method = HTTP_GET,
-        .handler = async_get_handler,
-        .user_ctx = NULL,
-};
-
-static void websocket_app_start(void)
-{
-    httpd_handle_t server = NULL;
-    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-
-    // Start the httpd server
-    ESP_LOGI(TAG, "Starting server on port: '%d'", config.server_port);
-    if (httpd_start(&server, &config) == ESP_OK)
-    {
-        // Registering the uri_handler
-        ESP_LOGI(TAG, "Registering URI handler");
-        httpd_register_uri_handler(server, &uri_handler);
-    }
-}
-
-void app_main(void)
-{
-    wifi_connection();
-    vTaskDelay(1500 / portTICK_PERIOD_MS);
-    websocket_app_start();
+    mdns_txt_item_t serviceTxtData[] = {
+        {"board", "esp32"},
+        {"path", "/"}};
+    ESP_ERROR_CHECK(mdns_service_add("ESP32-WebServer", "_http", "_tcp", 80, serviceTxtData,
+                                     sizeof(serviceTxtData) / sizeof(serviceTxtData[0])));
 }
